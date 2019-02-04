@@ -6,13 +6,15 @@
     listenToUser(yyy)
 
     var eraserEnabled = false
+    pen.onclick = function(){
+        eraserEnabled = false
+        pen.classList.add('active') //pen追加'active'这个class
+        eraser.classList.remove('active')   //eraser消掉'active'这个class
+    }
     eraser.onclick = function(){
         eraserEnabled = true
-        actions.className = 'actions x'
-    }
-    brush.onclick = function(){
-        eraserEnabled = false
-        actions.className = 'actions'
+        eraser.classList.add('active')
+        pen.classList.remove('active')
     }
 
     /************/
@@ -34,6 +36,40 @@
         var context = canvas.getContext('2d'); //获取2d的上下文
         var using = false //绘画启动开关
         var lastPoint = {x:undefined,y:undefined}//最后的一个点
+        
+        //实现颜色切换
+        red.onclick = function(){   //当id为red的标签被点中时
+            context.strokeStyle = 'red'   //把线的边框颜色时为红色
+            context.fillStyle = 'red'   //把线的填充颜色改成红色
+            black.classList.remove('active') //给id为black的标签减掉active的class   
+            red.classList.add('active') //给id为red的标签添加active的class
+            green.classList.remove('active') //给id为green的标签减掉active的class
+            blue.classList.remove('active') //给id为blue的标签剪掉active的class
+        }
+        green.onclick = function(){
+            context.strokeStyle = 'green'
+            context.fillStyle = 'green'
+            black.classList.remove('active')
+            red.classList.remove('active')
+            green.classList.add('active')
+            blue.classList.remove('active')
+        }
+        blue.onclick = function(){
+            context.strokeStyle = 'blue'
+            context.fillStyle = 'blue'
+            black.classList.remove('active')
+            red.classList.remove('active')
+            green.classList.remove('active')
+            blue.classList.add('active')
+        }
+        black.onclick = function(){
+            context.strokeStyle = 'black'
+            context.fillStyle = 'black'
+            black.classList.add('active')
+            red.classList.remove('active')
+            green.classList.remove('active')
+            blue.classList.remove('active')
+        }
         
         //特性检测，不针对设备
         if(document.body.ontouchstart !== undefined){//检测屏幕是否支持touch(触摸)事件，支持则执行下面的代码
@@ -70,7 +106,6 @@
                     context.beginPath();//开始绘画
                     context.moveTo(x1,y1) //开始坐标
                     context.lineWidth = 5 //线的宽度
-                    context.strokeStyle = 'black'
                     context.lineTo(x2,y2) //结束坐标
                     context.stroke() //边框填充
                     context.closePath() //关闭绘画
@@ -109,7 +144,6 @@
                 context.beginPath();//开始绘画
                 context.moveTo(x1,y1) //开始坐标
                 context.lineWidth = 5 //线的宽度
-                context.strokeStyle = 'black'
                 context.lineTo(x2,y2) //结束坐标
                 context.stroke() //边框填充
                 context.closePath() //关闭绘画
