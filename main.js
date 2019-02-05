@@ -1,6 +1,7 @@
-
     var yyy = document.getElementById('xxx');
-    
+    const context = yyy.getContext('2d');
+    var penLineWidth = 5
+
     setCanvasSize(yyy)
 
     listenToUser(yyy)
@@ -16,7 +17,25 @@
         eraser.classList.add('active')
         pen.classList.remove('active')
     }
-
+    clear.onclick = function(){
+        context.clearRect(0,0,yyy.width,yyy.height)
+    }
+    download.onclick = function(){
+        var url = yyy.toDataURL('image/png')
+        var a = document.createElement('a')
+        document.body.appendChild(a)
+        a.href = url
+        a.download = '我的画儿'
+        a.target = '_blank'
+        a.click()
+    }
+    //改变笔的粗细
+    thin.onclick = function(){
+        penLineWidth = 5
+    }
+    thick.onclick = function(){
+        penLineWidth = 10
+    }
     /************/
     function setCanvasSize(canvas){
         setCanvasSize()
@@ -105,7 +124,7 @@
                 function drawLine(x1,y1,x2,y2){
                     context.beginPath();//开始绘画
                     context.moveTo(x1,y1) //开始坐标
-                    context.lineWidth = 5 //线的宽度
+                    context.lineWidth = penLineWidth //线的宽度
                     context.lineTo(x2,y2) //结束坐标
                     context.stroke() //边框填充
                     context.closePath() //关闭绘画
@@ -143,7 +162,7 @@
             function drawLine(x1,y1,x2,y2){
                 context.beginPath();//开始绘画
                 context.moveTo(x1,y1) //开始坐标
-                context.lineWidth = 5 //线的宽度
+                context.lineWidth = penLineWidth //线的宽度
                 context.lineTo(x2,y2) //结束坐标
                 context.stroke() //边框填充
                 context.closePath() //关闭绘画
